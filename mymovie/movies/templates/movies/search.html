@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - MovieDB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+        }
+
+        .search-results {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .search-results h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .movie-column {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .movie-column:hover {
+            transform: translateY(-5px);
+        }
+
+        .movie-column img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+
+        .movie-column .info {
+            flex: 1;
+        }
+
+        .movie-column .info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .movie-column .info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+        a{
+            text-decoration:none;
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Search Results</h1>
+    </header>
+
+    <div class="search-results">
+        <h2>Results for {{query}}</h2>
+        <!-- Movie Column -->
+        {% for obj in objs %}
+        <div class="movie-column">
+            <a href="{% url "detail" obj.id %}">
+            <img src="{{obj.movie_img.url}}" alt="Movie Poster">
+            <div class="info">
+                <h3>{{obj.movie_name}}</h3>
+                <p>{{obj.movie_small_desc}}</p>
+            </a>
+            </div>
+        </div>
+        <!-- Add more movie columns dynamically -->
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 MovieDB. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieDB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color:black;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .movie-card {
+            background-color: #212121;
+            color:white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            width: calc(25% - 30px);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: auto;
+            
+        }
+
+        .movie-card .info {
+            padding: 15px;
+        }
+
+        .movie-card .info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .movie-card .info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+        .movie-card img {
+            width: 100%; /* Ensures the image spans the card width */
+            height: 200px; /* Sets a fixed height */
+            object-fit: contain; /* Ensures the image maintains its aspect ratio and fills the height */
+        }
+        nav {
+            background-color: #444;
+            padding: 10px 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            align-items: center;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-form input {
+            padding: 5px 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        .search-form button {
+            padding: 5px 10px;
+            margin-left: 5px;
+            font-size: 1rem;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-form button:hover {
+            background-color: #212121;
+            color:white;
+        }
+        a{
+            text-decoration:none;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MovieDB</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Filter</a></li>
+    
+            <li>
+                <form action="/search" method="get" class="search-form">
+                    {% csrf_token %}
+                    <input 
+                        type="text" 
+                        name="query"
+                        id="query" 
+                        placeholder="Search movies..." 
+                        required>
+                    <button type="submit">Search</button>
+                </form>
+            </li>
+            <li><span><a href="{% url "logout" %}">Logout</a></span></li>
+        </ul>
+        
+    </nav>
+
+    <div class="main-content">
+        {% for obj in objs %}
+        <div class="movie-card">
+            <a href="{% url "detail" obj.id %}">
+            <img src="{{ obj.movie_img.url }}" alt="{{ movie.title }} Poster">
+            <div class="info">
+                <h3>{{ obj.movie_name }}</h3>
+                <p>{{ obj.movie_small_desc }}</p>
+            </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 MovieDB. All rights reserved.</p>
+    </footer>
+</body>
+</html>
